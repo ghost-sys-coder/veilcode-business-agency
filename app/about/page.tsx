@@ -126,7 +126,7 @@ export default function AboutPage() {
                 src="/assets/vision-1.jpg"
                 alt="Vision visualization"
                 fill
-                className="bg-cover"
+                className="object-cover"
               />
             </div>
           </motion.div>
@@ -182,7 +182,7 @@ export default function AboutPage() {
             Ready to build something powerful together?
           </motion.h2>
           <p className="text-lg text-slate-300 mb-8 max-w-2xl mx-auto">
-            Let’s create digital systems that don’t just look good — they drive real business results.
+            Let&apos;s create digital systems that don&apos;t just look good — they drive real business results.
           </p>
           <Button size="lg" className="bg-blue-500 hover:bg-blue-600" asChild>
             <Link href="/book-call">Book Free Strategy Call</Link>
