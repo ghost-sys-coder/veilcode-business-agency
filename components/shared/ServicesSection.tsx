@@ -7,22 +7,22 @@ import { cn } from '@/lib/utils';
 
 const services = [
     {
-        icon: "/assets/agency.jpg", // Placeholder for icon
+        icon: "/assets/web-development-services.jpg",
         title: "Web Design & Development",
         description: "Craft high-performing websites and scalable web applications focused on user experience and data-driven analytics.",
     },
     {
-        icon: "/assets/agency.jpg",
+        icon: "/assets/growth-hero-1.jpg",
         title: "Growth & Advertising Systems",
         description: "Launch profitable ad campaigns and build systems to drive customer acquisition and revenue growth.",
     },
     {
-        icon: "/assets/agency.jpg",
+        icon: "/assets/data-analysis-1.jpg",
         title: "Data Analytics & BI",
         description: "Unlock actionable insights through advanced data analytics and business intelligence tools.",
     },
     {
-        icon: "/assets/agency.jpg",
+        icon: "/assets/ai-automation-1.jpg",
         title: "AI & Automation",
         description: "Implement AI-driven solutions and automation to streamline operations and enhance efficiency.",
     },
@@ -47,7 +47,14 @@ const ServicesSection = () => {
 
                             )}>
                                 <CardHeader className=''>
-                                    <Image src={service.icon} alt={service.title} width={40} height={40} className='rounded-sm p-1 shadow' />
+                                    <div className="w-30 h-15 rounded-md overflow-hidden">
+                                        <Image
+                                            src={service.icon}
+                                            alt={service.title}
+                                            width={100} height={100}
+                                            className='overflow-hidden w-full h-full object-cover'
+                                        />
+                                    </div>
                                     <CardTitle className={cn("mt-4", i === 0 && "font-semibold")}>{service.title}</CardTitle>
                                 </CardHeader>
                                 <CardContent>

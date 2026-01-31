@@ -41,7 +41,7 @@ const HeroSection = () => {
                 >
                     {/* Placeholder for abstract illustration/dashboard mockups */}
                     <Image
-                        src="/assets/agency.jpg"
+                        src="/assets/all-services-1.jpg"
                         alt="Digital systems illustration"
                         width={600}
                         height={400}
