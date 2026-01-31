@@ -45,7 +45,7 @@ const CaseStudies = () => {
                                         src={study.image}
                                         alt={study.title}
                                         width={400} height={200}
-                                        className="w-full h-100 object-cover"
+                                        className="w-full h-80 object-cover"
                                     />
                                 </CardContent>
                                 <CardHeader>
