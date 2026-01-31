@@ -3,12 +3,11 @@ import Image from 'next/image'
 
 const TrustIndicators = () => {
   return (
-    <section className="py-8 bg-slate-100">
+    <section className="py-8 bg-slate-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-center text-lg text-slate-600 mb-4 font-semibold">Trusted by startups, SMEs & growing brands</h2>
           <div className="flex justify-center space-x-8 overflow-x-auto">
-            {/* Placeholder logos */}
-            {["/assets/agency.jpg", "/assets/agency.jpg", "/assets/agency.jpg", "/assets/agency.jpg", "/assets/agency.jpg"].map((logo, i) => (
+            {["/logos/logo-1.png", "/logos/logo-2.png", "/logos/logo-3.png", "/logos/logo-4.png"].map((logo, i) => (
                 <Image
                     key={i}
                     src={`${logo}`}
