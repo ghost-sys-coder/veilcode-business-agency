@@ -1,0 +1,10 @@
+import { createClient } from "@supabase/supabase-js";
+
+const supabaseProjectUrl = process.env.SUPABASE_PROJECT_URL!;
+const supabaseAnonKey = process.env.SUPABASE_ANON_KEY!
+
+export const supabaseClient = createClient(supabaseProjectUrl, supabaseAnonKey, {
+    auth: {
+        persistSession: false
+    }
+});

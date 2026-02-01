@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -7,10 +7,14 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { motion } from "motion/react";
+import axios from "axios";
 
 import Link from "next/link";
+import { toast } from "sonner";
+import ScreenLoader from "@/components/shared/ScreenLoader";
 
 export default function ContactPage() {
+    const formRef = useRef<HTMLFormElement | null>(null);
     const [messageDetails, setMessageDetails] = useState({
         name: "",
         email: "",
@@ -19,11 +23,37 @@ export default function ContactPage() {
         budgetRange: "",
         projectDescription: ""
     });
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const handleSubmit = async (e: React.SyntheticEvent) => {
         e.preventDefault();
 
+        setIsSubmitting(true);
+
+        try {
+            const { data, status } = await axios.post("/api/client/messages", {
+                name: messageDetails.name,
+                email: messageDetails.email,
+                companyName: messageDetails.companyName,
+                projectType: messageDetails.projectType,
+                budgetRange: messageDetails.budgetRange,
+                projectDescription: messageDetails.projectDescription
+            });
+            console.log(data);
+
+            if (status === 201 && data?.success) {
+                toast.success(data?.message || "You have received an email from us! Check your inbox!");
+                return;
+            }
+        } catch (error) {
+            console.error("Failed to send message", error);
+        } finally {
+            setIsSubmitting(false);
+        }
+
     }
+
+    if (isSubmitting) return <ScreenLoader />
 
 
     return (
@@ -45,7 +75,14 @@ export default function ContactPage() {
                             <Button size="lg" className="bg-blue-600 hover:bg-blue-700" asChild>
                                 <Link href="/book-call">Book Free Strategy Call</Link>
                             </Button>
-                            <Button size="lg" variant="outline">
+
+                            <Button
+                                size="lg"
+                                variant="outline"
+                                onClick={() => {
+                                    formRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })
+                                }}
+                            >
                                 Or send us a message ↓
                             </Button>
                         </div>
@@ -67,7 +104,7 @@ export default function ContactPage() {
                         >
                             <h2 className="text-3xl font-bold mb-8">Send us a message</h2>
 
-                            <form className="space-y-6" onSubmit={handleSubmit}>
+                            <form className="space-y-6" onSubmit={handleSubmit} id="contact-form" ref={formRef}>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <div className="space-y-2">
                                         <Label htmlFor="name">Full Name</Label>
@@ -76,7 +113,7 @@ export default function ContactPage() {
                                             placeholder="Your name"
                                             required
                                             value={messageDetails.name}
-                                            onChange={e => setMessageDetails({...messageDetails, name: e.target.value})}
+                                            onChange={e => setMessageDetails({ ...messageDetails, name: e.target.value })}
                                         />
                                     </div>
                                     <div className="space-y-2">
@@ -87,7 +124,7 @@ export default function ContactPage() {
                                             placeholder="your@company.com"
                                             required
                                             value={messageDetails.email}
-                                            onChange={e => setMessageDetails({...messageDetails, email: e.target.value})}
+                                            onChange={e => setMessageDetails({ ...messageDetails, email: e.target.value })}
                                         />
                                     </div>
                                 </div>
@@ -98,7 +135,7 @@ export default function ContactPage() {
                                         id="company"
                                         placeholder="Your company name"
                                         value={messageDetails.companyName}
-                                        onChange={e => setMessageDetails({...messageDetails, companyName: e.target.value})}
+                                        onChange={e => setMessageDetails({ ...messageDetails, companyName: e.target.value })}
                                     />
                                 </div>
 
@@ -107,7 +144,7 @@ export default function ContactPage() {
                                         <Label htmlFor="project-type">Project Type</Label>
                                         <Select
                                             value={messageDetails.projectType}
-                                            onValueChange={(value) => setMessageDetails({...messageDetails, projectType: value})}>
+                                            onValueChange={(value) => setMessageDetails({ ...messageDetails, projectType: value })}>
                                             <SelectTrigger>
                                                 <SelectValue placeholder="Select one" />
                                             </SelectTrigger>
@@ -125,7 +162,7 @@ export default function ContactPage() {
                                         <Label htmlFor="budget">Budget Range</Label>
                                         <Select
                                             value={messageDetails.budgetRange}
-                                            onValueChange={(value) => setMessageDetails({...messageDetails, budgetRange: value})}
+                                            onValueChange={(value) => setMessageDetails({ ...messageDetails, budgetRange: value })}
                                         >
                                             <SelectTrigger>
                                                 <SelectValue placeholder="Select your budget range" />
@@ -150,7 +187,7 @@ export default function ContactPage() {
                                         className="min-h-35"
                                         required
                                         value={messageDetails.projectDescription}
-                                        onChange={e => setMessageDetails({...messageDetails, projectDescription: e.target.value})}
+                                        onChange={e => setMessageDetails({ ...messageDetails, projectDescription: e.target.value })}
                                     />
                                 </div>
 
@@ -239,7 +276,14 @@ export default function ContactPage() {
                         <Button size="lg" className="bg-blue-600 hover:bg-blue-700" asChild>
                             <Link href="/book-call">Book Free Strategy Call</Link>
                         </Button>
-                        <Button size="lg" variant="outline" className="border-slate-600 text-black hover:bg-slate-800">
+                        <Button
+                            size="lg"
+                            variant="outline"
+                            className="border-slate-600 text-black hover:bg-slate-800"
+                            onClick={() => {
+                                formRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })
+                            }}
+                        >
                             Continue to Message Form ↑
                         </Button>
                     </div>
