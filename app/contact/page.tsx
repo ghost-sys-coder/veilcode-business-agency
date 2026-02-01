@@ -1,4 +1,5 @@
 "use client";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -10,6 +11,21 @@ import { motion } from "motion/react";
 import Link from "next/link";
 
 export default function ContactPage() {
+    const [messageDetails, setMessageDetails] = useState({
+        name: "",
+        email: "",
+        companyName: "",
+        projectType: "",
+        budgetRange: "",
+        projectDescription: ""
+    });
+
+    const handleSubmit = async (e: React.SyntheticEvent) => {
+        e.preventDefault();
+
+    }
+
+
     return (
         <div className="min-h-screen bg-slate-50 text-slate-900">
             <section className="pt-24 pb-16 md:pt-32 md:pb-24 bg-linear-to-br from-blue-50 via-white to-slate-50">
@@ -51,27 +67,47 @@ export default function ContactPage() {
                         >
                             <h2 className="text-3xl font-bold mb-8">Send us a message</h2>
 
-                            <form className="space-y-6">
+                            <form className="space-y-6" onSubmit={handleSubmit}>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <div className="space-y-2">
                                         <Label htmlFor="name">Full Name</Label>
-                                        <Input id="name" placeholder="Your name" required />
+                                        <Input
+                                            id="name"
+                                            placeholder="Your name"
+                                            required
+                                            value={messageDetails.name}
+                                            onChange={e => setMessageDetails({...messageDetails, name: e.target.value})}
+                                        />
                                     </div>
                                     <div className="space-y-2">
                                         <Label htmlFor="email">Email</Label>
-                                        <Input id="email" type="email" placeholder="your@company.com" required />
+                                        <Input
+                                            id="email"
+                                            type="email"
+                                            placeholder="your@company.com"
+                                            required
+                                            value={messageDetails.email}
+                                            onChange={e => setMessageDetails({...messageDetails, email: e.target.value})}
+                                        />
                                     </div>
                                 </div>
 
                                 <div className="space-y-2">
                                     <Label htmlFor="company">Company (optional)</Label>
-                                    <Input id="company" placeholder="Your company name" />
+                                    <Input
+                                        id="company"
+                                        placeholder="Your company name"
+                                        value={messageDetails.companyName}
+                                        onChange={e => setMessageDetails({...messageDetails, companyName: e.target.value})}
+                                    />
                                 </div>
 
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <div className="space-y-2">
                                         <Label htmlFor="project-type">Project Type</Label>
-                                        <Select>
+                                        <Select
+                                            value={messageDetails.projectType}
+                                            onValueChange={(value) => setMessageDetails({...messageDetails, projectType: value})}>
                                             <SelectTrigger>
                                                 <SelectValue placeholder="Select one" />
                                             </SelectTrigger>
@@ -87,14 +123,19 @@ export default function ContactPage() {
 
                                     <div className="space-y-2">
                                         <Label htmlFor="budget">Budget Range</Label>
-                                        <Select>
+                                        <Select
+                                            value={messageDetails.budgetRange}
+                                            onValueChange={(value) => setMessageDetails({...messageDetails, budgetRange: value})}
+                                        >
                                             <SelectTrigger>
-                                                <SelectValue placeholder="Select range" />
+                                                <SelectValue placeholder="Select your budget range" />
                                             </SelectTrigger>
                                             <SelectContent>
-                                                <SelectItem value="10k-30k">$10k – $30k</SelectItem>
-                                                <SelectItem value="30k-80k">$30k – $80k</SelectItem>
-                                                <SelectItem value="80k+">$80k+</SelectItem>
+                                                <SelectItem value="120-300">$120 – $300</SelectItem>
+                                                <SelectItem value="300-700">$300 – $700</SelectItem>
+                                                <SelectItem value="700-1500">$700 - $1500</SelectItem>
+                                                <SelectItem value="1500-3000">$1500 - $3000</SelectItem>
+                                                <SelectItem value="3000+">$3000+</SelectItem>
                                                 <SelectItem value="exploring">Just exploring</SelectItem>
                                             </SelectContent>
                                         </Select>
@@ -108,6 +149,8 @@ export default function ContactPage() {
                                         placeholder="Tell us about your goals, timeline, challenges, or anything else that would help us understand your project..."
                                         className="min-h-35"
                                         required
+                                        value={messageDetails.projectDescription}
+                                        onChange={e => setMessageDetails({...messageDetails, projectDescription: e.target.value})}
                                     />
                                 </div>
 
