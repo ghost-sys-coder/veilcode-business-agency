@@ -1,26 +1,32 @@
 "use client";
 import React from 'react';
-import Image from 'next/image';
 import { motion } from "motion/react";
+import {
+  Search,
+  Lightbulb,
+  Code2,
+  LineChart,
+} from "lucide-react";
+
 
 const processSteps = [
     {
-        icon: "/assets/agency.jpg",
+        icon: <Search className='text-blue-600 h-10 w-10' />,
         title: "Discovery",
         description: "Understand your business goals and challenges.",
     },
     {
-        icon: "/assets/agency.jpg",
+        icon: <Lightbulb className='text-blue-600 h-10 w-10' />,
         title: "Strategy",
         description: "Develop a tailored plan for success.",
     },
     {
-        icon: "/assets/agency.jpg",
+        icon: <Code2 className='text-blue-600 h-10 w-10'/>,
         title: "Build",
         description: "Create robust digital systems.",
     },
     {
-        icon: "/assets/agency.jpg",
+        icon: <LineChart className='text-blue-600 h-10 w-10' />,
         title: "Optimize",
         description: "Continuously improve and scale.",
     },
@@ -40,13 +46,8 @@ const ProcessSteps = () => {
                             transition={{ duration: 0.5, delay: i * 0.1 }}
                             className="text-center relative flex flex-col gap-1 justify-center items-center rounded-xl shadow-md"
                         >
-                            <div className="bg-white p-1 rounded-sm shadow-sm w-fit">
-                                <Image
-                                    src={step.icon}
-                                    alt={step.title} width={40}
-                                    height={40}
-                                    className="mx-auto mb-4"
-                                />
+                            <div className="bg-white p-1 rounded-sm shadow-sm w-fit mb-2">
+                                {step.icon}
                             </div>
                             <h3 className="font-semibold">{step.title}</h3>
                             <p className="text-slate-600">{step.description}</p>

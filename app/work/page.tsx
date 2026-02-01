@@ -28,16 +28,6 @@ const caseStudies: CaseStudy[] = [
         tags: ["Web App", "Data Viz", "Next.js"],
     },
     {
-        slug: "ecommerce-growth",
-        title: "E-commerce Scaling Engine",
-        client: "AfriCart",
-        industry: "Retail / E-commerce",
-        image: "/cases/afrikart-ecommerce-scaling-engine.png",
-        result: "+340%",
-        resultLabel: "Revenue in 9 months",
-        tags: ["Growth", "Meta Ads", "Conversion Rate"],
-    },
-    {
         slug: "ai-support-agent",
         title: "AI Customer Support Agent",
         client: "Swift Logistics",
@@ -56,6 +46,16 @@ const caseStudies: CaseStudy[] = [
         result: "+215%",
         resultLabel: "Lead Conversion",
         tags: ["Web App", "Supabase", "Tailwind"],
+    },
+     {
+        slug: "ecommerce-growth",
+        title: "E-commerce Scaling Engine",
+        client: "AfriCart",
+        industry: "Retail / E-commerce",
+        image: "/cases/afrikart-ecommerce-scaling-engine.png",
+        result: "+340%",
+        resultLabel: "Revenue in 9 months",
+        tags: ["Growth", "Meta Ads", "Conversion Rate"],
     },
     {
         slug: "saas-analytics",
