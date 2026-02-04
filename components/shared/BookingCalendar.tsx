@@ -10,6 +10,8 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { motion } from "motion/react";
+import axios from "axios";
+import { toast } from "sonner";
 
 const availableTimeSlots = [
     "09:00 AM", "10:00 AM", "11:00 AM", "02:00 PM", "03:00 PM", "04:00 PM",
@@ -30,7 +32,20 @@ export function BookingCalendar() {
 
     const handleSubmit = async (e: React.SyntheticEvent) => {
         e.preventDefault();
-        if (!selectedDate || !selectedTime) return;
+        if (!selectedDate || !selectedTime) {
+            toast.error("Date and time must be provided");
+            return;
+        };
+
+        if (!formData.name || !formData.email) {
+            toast.error("Your name and email are required!");
+            return;
+        }
+
+        if (!formData.projectType) {
+            toast.error("Kindly provide the Project Type!");
+            return;
+        }
 
         try {
             const booking = {
@@ -39,9 +54,16 @@ export function BookingCalendar() {
                 ...formData,
                 created_at: new Date().toISOString(),
             };
-            console.log(booking);
+
+            const { data, status } = await axios.post("/api/client/bookings", booking);
+
+            if (status === 201) {
+                toast.success(data?.message || "You appointment has been booked! Check your email!");
+                return;
+            }
         } catch (error) {
             console.error("Something went wrong!", error);
+            toast.error("Failed to create booking, try again!");
         } finally {
             setSubmitted(false);
         }
@@ -98,7 +120,8 @@ export function BookingCalendar() {
                                     id="name"
                                     value={formData.name}
                                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                                    required
+                                        required
+                                        placeholder="John"
                                 />
                             </div>
                             <div className="space-y-2">
@@ -108,7 +131,8 @@ export function BookingCalendar() {
                                     type="email"
                                     value={formData.email}
                                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                                    required
+                                        required
+                                        placeholder="johndoe@example.com"
                                 />
                             </div>
                         </div>
@@ -118,17 +142,18 @@ export function BookingCalendar() {
                             <Input
                                 id="company"
                                 value={formData.company}
-                                onChange={(e) => setFormData({ ...formData, company: e.target.value })}
+                                    onChange={(e) => setFormData({ ...formData, company: e.target.value })}
+                                    placeholder="Company name..."
                             />
                         </div>
 
-                        <div>
+                        <div className="w-full">
                             <Label htmlFor="projectType" className="mb-2">Project Type</Label>
                             <Select onValueChange={(val) => setFormData({ ...formData, projectType: val })}>
-                                <SelectTrigger>
+                                <SelectTrigger className="w-full">
                                     <SelectValue placeholder="Select one" />
                                 </SelectTrigger>
-                                <SelectContent>
+                                <SelectContent className="">
                                     <SelectItem value="web">Web Design & Development</SelectItem>
                                     <SelectItem value="growth">Growth & Advertising</SelectItem>
                                     <SelectItem value="analytics">Data Analytics & BI</SelectItem>
